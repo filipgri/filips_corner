@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Device Portfolio | Albert Meronyo</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <!-- ========== SHARED HEADER ========== -->
+  <header class="site-header">
+    <h1 class="logo"><a href="index.html">Albert Meronyo</a></h1>
+
+    <button id="navToggle" class="hamburger" aria-label="Open Menu">☰</button>
+
+    <nav id="siteNav">
+      <a href="index.html#about">About</a>
+      <a href="index.html#publications">Publications</a>
+      <a href="index.html#projects">Projects</a>
+      <a href="devices.html">Devices</a>       <!-- NEW -->
+    </nav>
+  </header>
+
+  <!-- ========== DEVICE PORTFOLIO ========== -->
+  <main id="devices" class="portfolio">
+    <h2>Device Portfolio</h2>
+
+    <!-- ---------- EXAMPLE DEVICE CARD ---------- -->
+    <article class="device">
+      <img src="device-smartcane.jpg"
+           alt="Prototype photo of SmartCane with ultrasonic sensors"
+           class="device-img">
+
+      <div class="device-body">
+        <h3>SmartCane</h3>
+        <p class="device-role">Role: Interaction & enclosure design (2024)</p>
+        <p class="device-desc">
+          A white-cane attachment that adds haptic feedback for obstacles above waist height.
+        </p>
+
+        <ul class="device-benefits">
+          <li>Ultrasonic range-finding up to 150 cm.</li>
+          <li>Quiet vibration motor → does not draw attention in public.</li>
+          <li>Single-button interface for *eyes-free* mode switching.</li>
+        </ul>
+
+        <p class="device-links">
+          <a href="https://github.com/yourrepo/smartcane" target="_blank">Source code</a> •
+          <a href="smartcane-poster.pdf">Poster PDF</a>
+        </p>
+      </div>
+    </article>
+    <!-- ---------- /EXAMPLE ---------- -->
+
+    <!-- Repeat <article class="device">…</article> for each device -->
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer>
+    © 2025 Albert Meronyo • <a href="mailto:you@example.com">Contact</a>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

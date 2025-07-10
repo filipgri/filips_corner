@@ -1,0 +1,100 @@
+/* Global basics ----------------------------------------------------------- */
+:root {
+  --brand: #065fd4;        /* tweak to your favourite colour */
+  --text:  #202124;
+  --bg:    #fafafa;
+  --maxw:  880px;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html,body {
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+}
+
+section { padding: 3.5rem 1rem; }
+h1,h2,h3 { margin: 0 0 .5em; }
+h2 { border-bottom: 2px solid var(--brand); display: inline-block; }
+
+/* Header & nav ------------------------------------------------------------ */
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .75rem 1rem;
+  background: white;
+  border-bottom: 1px solid #ddd;
+  position: sticky; top: 0; z-index: 10;
+}
+
+.logo { font-size: 1.4rem; color: var(--brand); }
+
+#siteNav a {
+  margin-left: 1rem;
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 500;
+}
+
+#siteNav a:hover { color: var(--brand); }
+
+/* mobile tweaks */
+.hamburger { display: none; background: none; border: 0; font-size: 1.4rem; }
+@media (max-width: 640px) {
+  #siteNav { display: none; flex-direction: column; margin-top: .5rem; }
+  .hamburger { display: block; }
+}
+
+/* Hero -------------------------------------------------------------------- */
+.hero {
+  text-align: center;
+  padding: 4rem 1rem 2rem;
+}
+
+.flash-wrapper {
+  width: 220px; height: 220px;
+  margin: 0 auto 1rem;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.flash-img {
+  width: 100%; height: 100%; object-fit: cover;
+  animation: flash 3s steps(2) infinite;   /* core of the “flashing” */
+}
+
+/* Keyframes: brightness pops from 100 % ⇄ 180 % every 1.5 s  */
+@keyframes flash {
+  0%   { filter: brightness(100%) hue-rotate(0deg); }
+  50%  { filter: brightness(180%) hue-rotate(20deg); }
+  100% { filter: brightness(100%) hue-rotate(0deg); }
+}
+
+.tagline { max-width: var(--maxw); margin: 0 auto; font-size: 1.1rem; }
+
+/* Content sections -------------------------------------------------------- */
+#about, #publications, #projects { max-width: var(--maxw); margin: 0 auto; }
+
+.pub-list { list-style: none; padding: 0; }
+.pub-list li { margin-bottom: 1rem; }
+
+/* Projects ---------------------------------------------------------------- */
+.project {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Footer ------------------------------------------------------------------ */
+footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  font-size: .9rem;
+  color: #666;
+}
