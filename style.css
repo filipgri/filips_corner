@@ -68,14 +68,7 @@ h2 { border-bottom: 2px solid var(--brand); display: inline-block; }
   animation: flash 3s steps(2) infinite;   /* core of the “flashing” */
 }
 
-/* Keyframes: brightness pops from 100 % ⇄ 180 % every 1.5 s  */
-@keyframes flash {
-  0%   { filter: brightness(100%) hue-rotate(0deg); }
-  50%  { filter: brightness(180%) hue-rotate(20deg); }
-  100% { filter: brightness(100%) hue-rotate(0deg); }
-}
 
-.tagline { max-width: var(--maxw); margin: 0 auto; font-size: 1.1rem; }
 
 /* Content sections -------------------------------------------------------- */
 #about, #publications, #projects { max-width: var(--maxw); margin: 0 auto; }
@@ -98,3 +91,4 @@ footer {
   font-size: .9rem;
   color: #666;
 }
+  
