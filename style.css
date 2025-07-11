@@ -56,7 +56,7 @@ h2 { border-bottom: 2px solid var(--brand); display: inline-block; }
   padding: 4rem 1rem 2rem;
 }
 
-.flash-wrapper {
+/*.flash-wrapper {
   width: 220px; height: 220px;
   margin: 0 auto 1rem;
   border-radius: 50%;
@@ -66,12 +66,62 @@ h2 { border-bottom: 2px solid var(--brand); display: inline-block; }
 .flash-img {
   display: block;
   max-width: var(--maxw); /* or 300px / 100%—whatever fits your design */
-  height: auto;
+  /*height: auto;
   border-radius: 50%;    /* keeps it circular */
-  margin: 0 auto;        /* center within the wrapper */
+  /*margin: 0 auto;        /* center within the wrapper */
 }
 
+.flash-wrapper {
+  width: 220px;
+  height: 220px;
+  margin: 0 auto 1rem;
+  border-radius: 50%;
+  overflow: hidden;
 
+  /* ① main bezel: thick, dark ring */
+  border: 8px solid #333;
+
+  /* ② subtle inner highlight */
+  box-shadow:
+    inset 0 0 0 4px #999,   /* inner “screen” border */
+    0 4px 12px rgba(0,0,0,0.5); /* outer drop shadow */
+  
+  position: relative;
+  background: #111; /* shows behind your GIF if ever it doesn’t fully fill the circle */
+}
+
+.flash-wrapper::before,
+.flash-wrapper::after {
+  content: "";
+  position: absolute;
+  background: #333;
+  border-radius: 2px;
+}
+
+/* little “antenna stub” on top center */
+.flash-wrapper::before {
+  width: 4px;
+  height: 24px;
+  top: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* bottom speaker grille bar */
+.flash-wrapper::after {
+  width: 60%;
+  height: 4px;
+  bottom: -4px;
+  left: 20%;
+}
+
+/* your GIF itself stays perfectly circular */
+.flash-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+}
 
 /* Content sections -------------------------------------------------------- */
 #about, #publications, #projects { max-width: var(--maxw); margin: 0 auto; }
