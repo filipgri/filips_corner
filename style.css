@@ -64,8 +64,11 @@ h2 { border-bottom: 2px solid var(--brand); display: inline-block; }
 }
 
 .flash-img {
-  width: 100%; height: 100%; object-fit: cover;
-  animation: flash 3s steps(2) infinite;   /* core of the “flashing” */
+  display: block;
+  max-width: var(--maxw); /* or 300px / 100%—whatever fits your design */
+  height: auto;
+  border-radius: 50%;    /* keeps it circular */
+  margin: 0 auto;        /* center within the wrapper */
 }
 
 
