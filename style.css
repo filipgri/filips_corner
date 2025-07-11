@@ -56,39 +56,6 @@ h2 { border-bottom: 2px solid var(--brand); display: inline-block; }
   padding: 4rem 1rem 2rem;
 }
 
-/*.flash-wrapper {
-  width: 220px; height: 220px;
-  margin: 0 auto 1rem;
-  border-radius: 50%;
-  overflow: hidden;
-}
-
-.flash-img {
-  display: block;
-  max-width: var(--maxw); /* or 300px / 100%—whatever fits your design */
-  /*height: auto;
-  border-radius: 50%;    /* keeps it circular */
-  /*margin: 0 auto;        /* center within the wrapper */
-}
-
-/* Simple square crop for your GIF */
-.flash-wrapper {
-  width: 240px;        /* choose your square size */
-  height: 240px;
-  margin: 0 auto 1rem; /* center + spacing */
-  overflow: hidden;    /* hide the overflow beyond the square */
-}
-
-.flash-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;   /* scales & centre-crops the GIF to fill the box */
-  display: block;
-}
-
-
-
-
 /* Content sections -------------------------------------------------------- */
 #about, #publications, #projects { max-width: var(--maxw); margin: 0 auto; }
 
@@ -110,6 +77,22 @@ footer {
   font-size: .9rem;
   color: #666;
 }
+
+/* Simple square crop for your GIF */
+.flash-wrapper {
+  width: 240px;
+  height: 240px;
+  margin: 0 auto 1rem;
+  overflow: hidden;
+}
+
+.flash-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 
 
 
