@@ -71,16 +71,21 @@ h2 { border-bottom: 2px solid var(--brand); display: inline-block; }
   /*margin: 0 auto;        /* center within the wrapper */
 }
 
+/* Simple square crop for your GIF */
 .flash-wrapper {
-  width: 240px;
+  width: 240px;        /* choose your square size */
   height: 240px;
-  overflow: hidden;      /* hides the parts outside the box */
+  margin: 0 auto 1rem; /* center + spacing */
+  overflow: hidden;    /* hide the overflow beyond the square */
 }
+
 .flash-img {
   width: 100%;
   height: 100%;
-  object-fit: cover;     /* scale & center-crop into the square */
+  object-fit: cover;   /* scales & centre-crops the GIF to fill the box */
+  display: block;
 }
+
 
 
 
