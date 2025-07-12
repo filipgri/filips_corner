@@ -29,14 +29,16 @@
   <div class="flash-wrapper">
     <video
       class="flash-img"
+      poster="images/your-photo.jpg"
       autoplay
       loop
       muted
       playsinline
-      controls       <!-- add controls so you can test it shows up -->
+      preload="auto"
     >
       <source src="images/glitch_square.mp4" type="video/mp4">
-      Your browser does not support HTML5 video.
+      <!-- Fallback for very old browsers -->
+      Your browser doesn’t support inline video.
     </video>
   </div>
   <p class="tagline">
