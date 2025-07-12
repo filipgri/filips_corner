@@ -103,8 +103,8 @@ footer {
 
 .flash-img {
   display: block;
-  width: 150%;
-  height: 150%;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
