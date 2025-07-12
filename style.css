@@ -10,16 +10,16 @@
 *::before,
 *::after { box-sizing: border-box; }
 
-html,body {
-  margin: 0;
-  font-family: system-ui, -apple-system, sans-serif;
-  color: var(--text);
-  background: var(--bg);
-}
+  html,body {
+    margin: 0;
+    font-family: system-ui, -apple-system, sans-serif;
+    color: var(--text);
+    background: var(--bg);
+  }
 
-section { padding: 3.5rem 1rem; }
-h1,h2,h3 { margin: 0 0 .5em; }
-h2 { border-bottom: 2px solid var(--brand); display: inline-block; }
+  section { padding: 3.5rem 1rem; }
+  h1,h2,h3 { margin: 0 0 .5em; }
+  h2 { border-bottom: 2px solid var(--brand); display: inline-block; }
 
 /* Header & nav ------------------------------------------------------------ */
 .site-header {
@@ -50,10 +50,24 @@ h2 { border-bottom: 2px solid var(--brand); display: inline-block; }
   .hamburger { display: block; }
 }
 
-/* Hero -------------------------------------------------------------------- */
+/* Hero two column layout */
 .hero {
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: var(--maxw);
+  margin: 0 auto;
   padding: 4rem 1rem 2rem;
+  gap: 2rem;
+  /* ensure the section isn’t hidden under the sticky header */
+  scroll-margin-top: 80px;
+}
+
+/* Left text pane */
+.hero-text {
+  flex: 1;
+  min-width: 200px;
+  text-align: left;
 }
 
 /* Content sections -------------------------------------------------------- */
@@ -80,9 +94,10 @@ footer {
 
 /* Simple square crop for your GIF */
 .flash-wrapper {
+  flex: 1;
   width: 240px;
   height: 240px;
-  margin: 0 auto 1rem;
+  margin: 0;
   overflow: hidden;
 }
 
