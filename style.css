@@ -58,7 +58,7 @@
   max-width: var(--maxw);
   margin: 0 auto;
   padding: 4rem 1rem 2rem;
-  gap: 4rem;
+  gap: 6rem;
   /* ensure the section isn’t hidden under the sticky header */
   scroll-margin-top: 80px;
 }
