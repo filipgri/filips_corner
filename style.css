@@ -126,7 +126,8 @@ footer {
   color: var(--brand);
 }
 
-/* Projects grid inside #projects */
+/* -------Projects grid inside #projects -------*/
+
 #projects {
   max-width: var(--maxw);
   margin: 0 auto 3rem;
@@ -192,6 +193,87 @@ footer {
     grid-template-columns: 1fr;
   }
 }
+
+/* ---------------- Projects page ---------------- */
+#projects-list {
+  max-width: var(--maxw);
+  margin: 0 auto 3rem;
+  padding: 0 1rem;
+}
+
+#projects-list h2 {
+  margin-bottom: 1rem;
+}
+
+/* Individual project card */
+.project {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+
+/* Header row with title + toggle */
+.project-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  background: #f5f5f5;
+}
+
+.project-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.project-toggle {
+  font-size: 1.2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Hidden by default */
+.project-content {
+  display: none;
+  padding: 1rem;
+  background: white;
+}
+
+/* When open, show it */
+.project.open .project-content {
+  display: block;
+}
+
+/* Abstract text */
+.project-abstract {
+  margin: 0 0 1rem;
+  color: #333;
+  line-height: 1.4;
+}
+
+/* Image gallery inside each project */
+.project-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.project-images img {
+  flex: 1 1 calc(50% - 1rem);
+  max-width: calc(50% - 1rem);
+  height: auto;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+/* Site nav “active” state */
+#siteNav a.active {
+  color: var(--brand);
+  font-weight: 600;
+}
+
 
 
 
