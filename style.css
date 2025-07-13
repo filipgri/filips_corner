@@ -92,7 +92,7 @@ footer {
   color: #666;
 }
 
-/* Simple square crop for your GIF */
+/* GIF position */
 .flash-wrapper {
   flex: 1;
   width: 240px;
@@ -107,6 +107,17 @@ footer {
   width: 60%;
   height: 60%;
   object-fit: cover;
+}
+
+.gif-tagline {
+  margin-top: 1rem;
+  font-size: 1rem;
+  text-align: center;
+  color: var(--text);
+
+  /* add these */
+  position: relative;
+  left: -10px;    /* shift 10px to the left; tweak as needed */
 }
 
 
