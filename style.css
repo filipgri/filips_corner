@@ -32,7 +32,7 @@
   position: sticky; top: 0; z-index: 10;
 }
 
-.logo { font-size: 1.4rem; color: var(--brand); }
+.logo { font-size: 1.4rem; color: var(--brand); margin-left: 2rem; }
 
 #siteNav a {
   margin-left: 1rem;
@@ -117,7 +117,7 @@ footer {
 
   /* add these */
   position: relative;
-  right: +20px;    /* shift 10px to the left; tweak as needed */
+  right: +40px;    /* shift 10px to the left; tweak as needed */
 }
 
 
