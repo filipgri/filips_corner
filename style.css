@@ -35,7 +35,7 @@
 .logo { font-size: 1.4rem; color: var(--brand); margin-left: 8rem; }
 
 #siteNav a {
-  margin-left: 10rem;
+  margin-left: 10re m;
   text-decoration: none;
   color: var(--text);
   font-weight: 500;
@@ -120,6 +120,11 @@ footer {
   right: +40px;    /* shift 10px to the left; tweak as needed */
 }
 
+.more-text {
+  margin-top: 0.5rem;
+  font-style: italic;
+  color: var(--brand);
+}
 
 
 
