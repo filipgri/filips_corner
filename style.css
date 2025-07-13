@@ -126,6 +126,74 @@ footer {
   color: var(--brand);
 }
 
+/* Projects grid inside #projects */
+#projects {
+  max-width: var(--maxw);
+  margin: 0 auto 3rem;
+  padding: 0 1rem;
+}
+
+#projects .projects-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.project-quadrant {
+  display: block;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: transform .2s, box-shadow .2s;
+}
+
+.project-quadrant:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.project-quadrant img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.project-quadrant .project-info {
+  padding: 1rem;
+}
+
+.project-quadrant h3 {
+  margin: 0 0 .5em;
+  font-size: 1.1rem;
+}
+
+.project-quadrant p {
+  margin: 0;
+  font-size: .95rem;
+  color: #555;
+}
+
+#projects .see-all {
+  text-align: right;
+  margin-top: .5rem;
+}
+
+#projects .see-all a {
+  color: var(--brand);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+/* Stack to single column on mobile */
+@media (max-width: 640px) {
+  #projects .projects-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
 
 
   
