@@ -32,10 +32,10 @@
   position: sticky; top: 0; z-index: 10;
 }
 
-.logo { font-size: 1.4rem; color: var(--brand); margin-left: 2rem; }
+.logo { font-size: 1.4rem; color: var(--brand); margin-left: 8rem; }
 
 #siteNav a {
-  margin-left: 1rem;
+  margin-left: 5rem;
   text-decoration: none;
   color: var(--text);
   font-weight: 500;
