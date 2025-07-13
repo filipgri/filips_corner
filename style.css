@@ -117,7 +117,7 @@ footer {
 
   /* add these */
   position: relative;
-  right: -10px;    /* shift 10px to the left; tweak as needed */
+  right: +10px;    /* shift 10px to the left; tweak as needed */
 }
 
 
