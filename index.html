@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="" et="utf-8" />
+  <meta charset="utf-8" />
   <title>filip.bircanin@kcl.ac.uk</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <link rel="stylesheet" href="style.css" />
@@ -29,7 +29,7 @@
   <section class="hero" id="hi">
     <div class="hero-text">
       <h2>Hi.</h2>
-      <p>I am Filip, based in London. I was in love with Cognitive Science, trained at the University of Vienna. I am now a Design Researcher specialiased in Accessibility. Most of my time is spent in the field designing with people. People are very often marginalised by the very systems designed for them, so I try to be very critical in how approach design. I am interested in AI, but catious. </p>
+      <p>I’m Filip, an HCI researcher in London specialising in accessibility. I design with—not just for—people, often in the field. I’m interested in AI, but I’m cautious and human‑centred in how I use it.</p>
     </div>
     <div class="flash-wrapper">
       <img src="images/circ_profile.gif" alt="Portrait of Filip Bircanin" class="flash-img">
@@ -43,12 +43,10 @@
   <section id="publications">
     <h2>Publications</h2>
     <ul class="pub-list">
-      <!-- One example item -->
       <li>
         <strong>Sounds Accessible: Envisioning Accessible Audio-Media Futures with People with Aphasia </strong><br>
         <em>CHI 2025</em> • Co-authors: Nevsky A.; Perera H.; Agarwal V.; Song E.; Cruice M.; Neate T.
         <a href="papers/sounds_accessible.pdf"> open PDF </a>
-        <!-- New line for “there is a lot more” -->
         <p class="more-text">
           <a href="publications.html"> There is a lot more… </a>
           </p>
@@ -72,7 +70,7 @@
       <img src="images/participants.jpg" alt="Project Two thumbnail">
       <div class="project-info">
         <h3>Ca11y Project</h3>
-        <p> Together with BBC R&D and post-stroke survivors we design accessible media technologies.</p>
+        <p> Together with BBC R&amp;D and post-stroke survivors we design accessible media technologies.</p>
       </div>
     </a>
   </div>
@@ -84,7 +82,52 @@
 
   <!-- ========== FOOTER ========== -->
   <footer>
-    © 2025 Filip Bircanin • <strong>filip.bircanin@kcl.ac.uk</strong/><br>
+    © 2025 Filip Bircanin • <strong>filip.bircanin@kcl.ac.uk</strong><br>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
+""",
+    "publications.html": """<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Publications — Filip Bircanin</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <h1 class="logo">Filip Bircanin</h1>
+    <button id="navToggle" class="hamburger" aria-label="Open Menu">☰</button>
+    <nav id="siteNav">
+      <a href="index.html">About</a>
+      <a href="projects.html">Projects</a>
+      <a href="publications.html" class="active">Publications</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="publications">
+      <h2>2025 Publications</h2>
+      <ul class="pub-list">
+        <li>
+          <a href="papers/paper-title-2025.pdf" target="_blank" rel="noopener">
+            Bircanin, F. (2025). <em>Title of First 2025 Paper</em>. Journal Name.
+          </a>
+        </li>
+        <li>
+          <a href="papers/second-paper-2025.pdf" target="_blank" rel="noopener">
+            Bircanin, F., &amp; Coauthor, A. (2025). <em>Title of Second 2025 Paper</em>. Conference Proceedings.
+          </a>
+        </li>
+        <!-- add more 2025 papers here -->
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 Filip Bircanin • filip.bircanin@kcl.ac.uk
   </footer>
 
   <script src="script.js"></script>
