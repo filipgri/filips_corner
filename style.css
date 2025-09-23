@@ -208,3 +208,14 @@ footer {
   .logo { font-size: 1.1rem; }
   .hamburger { display: inline-block; }
 }
+
+
+/* Center header content to match main column width */
+.site-header {
+  padding-left: max(1rem, calc((100vw - var(--maxw)) / 2));
+  padding-right: max(1rem, calc((100vw - var(--maxw)) / 2));
+  justify-content: space-between;
+}
+
+.logo { margin: 0; }
+
