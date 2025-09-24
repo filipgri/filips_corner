@@ -1,146 +1,95 @@
-/* Global basics ----------------------------------------------------------- */
-:root {
-  --brand: #065fd4;        /* tweak to your favourite colour */
+/* =======================================================================
+   Base variables
+   ======================================================================= */
+:root{
+  --brand: #0a56ff;   /* blue for octagon & accents */
   --text:  #202124;
   --bg:    #fafafa;
-  --maxw:  880px;
+  --maxw:  880px;     /* site content width */
 }
 
 *,
 *::before,
-*::after { box-sizing: border-box; }
+*::after{ box-sizing: border-box; }
 
-  html,body {
-    margin: 0;
-    font-family: system-ui, -apple-system, sans-serif;
-    color: var(--text);
-    background: var(--bg);
-  }
-
-  section { padding: 3.5rem 1rem; }
-  h1,h2,h3 { margin: 0 0 .5em; }
-  h2 { border-bottom: 2px solid var(--brand); display: inline-block; }
-
-/* Header & nav ------------------------------------------------------------ */
-.site-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: .75rem 4rem;
-  background: white;
-  border-bottom: 1px solid #ddd;
-  position: sticky; top: 0; z-index: 10;
-}
-
-.logo { font-size: 1.4rem; color: var(--brand); margin-left: 8rem; }
-
-#siteNav a {
-  margin-left: 5rem;
-  text-decoration: none;
+html, body{
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
   color: var(--text);
-  font-weight: 500;
+  background: var(--bg);
 }
 
-#siteNav a:hover { color: var(--brand); }
+img{ max-width: 100%; display: block; }
 
-/* mobile tweaks */
-.hamburger { display: none; background: none; border: 0; font-size: 1.4rem; }
-@media (max-width: 640px) {
-  #siteNav { display: none; flex-direction: column; margin-top: .5rem; }
-  .hamburger { display: block; }
+section{ padding: 3.5rem 1rem; }
+h1,h2,h3{ margin: 0 0 .5em; }
+h2{ border-bottom: 2px solid var(--brand); display: inline-block; }
+
+/* =======================================================================
+   Header & navigation (stable + centered to --maxw)
+   ======================================================================= */
+.site-header{
+  position: sticky; top: 0; z-index: 10;
+  display: flex; align-items: center;
+  width: 100%;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+  /* center the inner content to match main column */
+  padding-left: max(1rem, calc((100vw - var(--maxw)) / 2));
+  padding-right: max(1rem, calc((100vw - var(--maxw)) / 2));
+  padding-top: .75rem; padding-bottom: .75rem;
 }
 
-/* Hero two column layout */
-.hero {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.logo{
+  font-size: 1.2rem; color: var(--brand);
+  white-space: nowrap; line-height: 1; margin: 0;
+  flex: 0 0 auto;
+}
+
+#siteNav{
+  margin-left: auto;               /* nav pinned to the right edge of the centered column */
+  display: flex; align-items: center; gap: 1.1rem;
+  white-space: nowrap; flex: 0 0 auto;
+}
+#siteNav a{
+  text-decoration: none; color: var(--text); font-weight: 500;
+}
+#siteNav a:hover{ color: var(--brand); }
+#siteNav a.active{ color: var(--brand); font-weight: 600; }
+
+.hamburger{ display: none; background: none; border: 0; font-size: 1.35rem; margin-left: .75rem; }
+
+/* =======================================================================
+   Hero (two columns aligned to --maxw)
+   ======================================================================= */
+.hero{
   max-width: var(--maxw);
   margin: 0 auto;
   padding: 4rem 1rem 2rem;
-  gap: 6rem;
-  /* ensure the section isn’t hidden under the sticky header */
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 4rem;
   scroll-margin-top: 80px;
 }
 
-/* Left text pane */
-.hero-text {
-  flex: 1;
-  min-width: 200px;
-  text-align: left;
-}
+.hero-text{ min-width: 220px; text-align: left; }
 
-/* Content sections -------------------------------------------------------- */
-#about, #publications, #projects { max-width: var(--maxw); margin: 0 auto; }
+/* =======================================================================
+   Publications & Projects blocks
+   ======================================================================= */
+#publications, #projects{ max-width: var(--maxw); margin: 0 auto; }
 
-.pub-list { list-style: none; padding: 0; }
-.pub-list li { margin-bottom: 1rem; }
+.pub-list{ list-style: none; padding: 0; }
+.pub-list li{ margin-bottom: 1rem; }
 
-/* Projects ---------------------------------------------------------------- */
-.project {
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  padding: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-/* Footer ------------------------------------------------------------------ */
-footer {
-  text-align: center;
-  padding: 2rem 1rem;
-  font-size: .9rem;
-  color: #666;
-}
-
-/* GIF position */
-.flash-wrapper {
-  flex: 1;
-  width: 240px;
-  height: 270px;
-  margin-left: 6rem;
-  margin-top: 3rem;
-  overflow: hidden;
-}
-
-.flash-img {
-  display: block;
-  width: 60%;
-  height: 60%;
-  object-fit: cover;
-}
-
-.gif-tagline {
-  margin-top: 1rem;
-  font-size: 1rem;
-  text-align: center;
-  color: var(--text);
-
-  /* add these */
-  position: relative;
-  right: +40px;    /* shift 10px to the left; tweak as needed */
-}
-
-.more-text {
-  margin-top: 0.5rem;
-  font-style: italic;
-  color: var(--brand);
-}
-
-/* -------Projects grid inside #projects -------*/
-
-#projects {
-  max-width: var(--maxw);
-  margin: 0 auto 3rem;
-  padding: 0 1rem;
-}
-
-#projects .projects-grid {
+#projects .projects-grid{
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
 }
 
-.project-quadrant {
+.project-quadrant{
   display: block;
   border: 1px solid #ddd;
   border-radius: 6px;
@@ -149,133 +98,82 @@ footer {
   color: inherit;
   transition: transform .2s, box-shadow .2s;
 }
-
-.project-quadrant:hover {
+.project-quadrant:hover{
   transform: translateY(-4px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 8px rgba(0,0,0,.15);
+}
+.project-quadrant img{ width: 100%; height: auto; }
+.project-quadrant .project-info{ padding: 1rem; }
+
+.see-all a{ display: inline-block; margin-top: .5rem; font-weight: 500; text-decoration: none; }
+
+/* =======================================================================
+   Device cards (devices.html)
+   ======================================================================= */
+.portfolio{ max-width: var(--maxw); margin: 0 auto; padding: 2rem 1rem 4rem; }
+.device{ display: grid; grid-template-columns: 260px 1fr; gap: 1rem; border:1px solid #ddd; border-radius: 8px; overflow:hidden; background:#fff; margin-bottom:1.25rem; }
+.device-img{ width:100%; height:100%; object-fit:cover; }
+.device-body{ padding:1rem; }
+.device-links a{ color: var(--brand); text-decoration:none; }
+.device-links a:hover{ text-decoration:underline; }
+
+/* =======================================================================
+   Octagonal frame around the profile image
+   ======================================================================= */
+.flash-wrapper{
+  position: relative;
+  width: 300px; height: 300px;       /* container that holds both the frame and the image */
 }
 
-.project-quadrant img {
-  width: 100%;
-  height: auto;
-  display: block;
+.flash-wrapper::before{
+  content: "";
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  width: 230px; height: 230px;       /* outer octagon size */
+  border: 8px solid var(--brand);    /* frame thickness & colour */
+  clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+  border-radius: 4px;                 /* slightly soften corners */
+  background: transparent;
+  pointer-events: none;
+  box-sizing: border-box;
 }
 
-.project-quadrant .project-info {
-  padding: 1rem;
-}
-
-.project-quadrant h3 {
-  margin: 0 0 .5em;
-  font-size: 1.1rem;
-}
-
-.project-quadrant p {
-  margin: 0;
-  font-size: .95rem;
-  color: #555;
-}
-
-#projects .see-all {
-  text-align: right;
-  margin-top: .5rem;
-}
-
-#projects .see-all a {
-  color: var(--brand);
-  font-weight: 500;
-  text-decoration: none;
-}
-
-/* Stack to single column on mobile */
-@media (max-width: 640px) {
-  #projects .projects-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ---------------- Projects page ---------------- */
-#projects-list {
-  max-width: var(--maxw);
-  margin: 0 auto 3rem;
-  padding: 0 1rem;
-}
-
-#projects-list h2 {
-  margin-bottom: 1rem;
-}
-
-/* Individual project card */
-.project {
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  margin-bottom: 1.5rem;
-  overflow: hidden;
-}
-
-/* Header row with title + toggle */
-.project-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1rem;
-  background: #f5f5f5;
-}
-
-.project-header h3 {
-  margin: 0;
-  font-size: 1.2rem;
-}
-
-.project-toggle {
-  font-size: 1.2rem;
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
-/* Hidden by default */
-.project-content {
-  display: none;
-  padding: 1rem;
-  background: white;
-}
-
-/* When open, show it */
-.project.open .project-content {
-  display: block;
-}
-
-/* Abstract text */
-.project-abstract {
-  margin: 0 0 1rem;
-  color: #333;
-  line-height: 1.4;
-}
-
-/* Image gallery inside each project */
-.project-images {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-.project-images img {
-  flex: 1 1 calc(50% - 1rem);
-  max-width: calc(50% - 1rem);
-  height: auto;
-  border-radius: 4px;
+/* Circular image centered inside the frame with a clear gap */
+.flash-img{
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  width: 165px; height: 165px;       /* smaller than octagon to create the gap */
   object-fit: cover;
+  border-radius: 50%;
+  z-index: 1;
 }
 
-/* Site nav “active” state */
-#siteNav a.active {
-  color: var(--brand);
-  font-weight: 600;
+/* Tagline sits under the frame */
+.gif-tagline{
+  position: absolute;
+  left: 50%; bottom: 0;
+  transform: translateX(-50%);
+  margin: 0; padding-top: .25rem;
+  text-align: center; font-size: 1rem; color: var(--text);
+  width: 100%;
 }
 
+/* =======================================================================
+   Footer
+   ======================================================================= */
+footer{ text-align:center; padding:2rem 1rem; font-size:.9rem; color:#666; }
 
+/* =======================================================================
+   Mobile
+   ======================================================================= */
+@media (max-width: 640px){
+  /* header: show burger, hide nav until toggled */
+  .hamburger{ display: inline-block; }
+  #siteNav{ display: none; flex-direction: column; gap: .5rem; }
+  #siteNav.open{ display: flex; }
 
-
-
-  
+  .hero{ grid-template-columns: 1fr; gap: 1.5rem; }
+  #projects .projects-grid{ grid-template-columns: 1fr; }
+}
