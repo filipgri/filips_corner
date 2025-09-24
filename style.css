@@ -131,7 +131,7 @@ h2{ border-bottom: 2px solid var(--brand); display: inline-block; }
   left: 50%; top: 50%;
   transform: translate(-50%, -50%);
   width: 230px; height: 230px;       /* outer octagon size */
-  border: 5px solid var(--brand);    /* frame thickness & colour */
+  border: 2px solid var(--brand);    /* frame thickness & colour */
   clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
   border-radius: 4px;                 /* slightly soften corners */
   background: transparent;
