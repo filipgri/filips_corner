@@ -21,36 +21,21 @@
   h1,h2,h3 { margin: 0 0 .5em; }
   h2 { border-bottom: 2px solid var(--brand); display: inline-block; }
 
-
-/* Header & nav (stabilised) ---------------------------------------------- */
+/* Header & nav ------------------------------------------------------------ */
 .site-header {
   display: flex;
   align-items: center;
-  padding: .75rem 1rem;
+  justify-content: space-between;
+  padding: .75rem 4rem;
   background: white;
   border-bottom: 1px solid #ddd;
   position: sticky; top: 0; z-index: 10;
 }
 
-.logo {
-  font-size: 1.25rem;
-  color: var(--brand);
-  margin: 0;
-  white-space: nowrap;    /* keep name on one line */
-  line-height: 1;
-  flex: 0 0 auto;
-}
-
-#siteNav {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-left: auto;      /* pins nav to the right, keeps spacing consistent */
-  white-space: nowrap;    /* keep menu on one line */
-  flex: 0 0 auto;
-}
+.logo { font-size: 1.4rem; color: var(--brand); margin-left: 8rem; }
 
 #siteNav a {
+  margin-left: 5rem;
   text-decoration: none;
   color: var(--text);
   font-weight: 500;
@@ -60,7 +45,10 @@
 
 /* mobile tweaks */
 .hamburger { display: none; background: none; border: 0; font-size: 1.4rem; }
-
+@media (max-width: 640px) {
+  #siteNav { display: none; flex-direction: column; margin-top: .5rem; }
+  .hamburger { display: block; }
+}
 
 /* Hero two column layout */
 .hero {
@@ -200,22 +188,94 @@ footer {
 }
 
 /* Stack to single column on mobile */
-
 @media (max-width: 640px) {
-  #siteNav { display: none; flex-direction: column; margin-top: .5rem; gap: .5rem; }
-  #siteNav.open { display: flex; }
-  .site-header { padding: .75rem 1rem; }
-  .logo { font-size: 1.1rem; }
-  .hamburger { display: inline-block; }
+  #projects .projects-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
+/* ---------------- Projects page ---------------- */
+#projects-list {
+  max-width: var(--maxw);
+  margin: 0 auto 3rem;
+  padding: 0 1rem;
+}
 
-/* Center header content to match main column width */
-.site-header {
-  padding-left: max(1rem, calc((100vw - var(--maxw)) / 2));
-  padding-right: max(1rem, calc((100vw - var(--maxw)) / 2));
+#projects-list h2 {
+  margin-bottom: 1rem;
+}
+
+/* Individual project card */
+.project {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+
+/* Header row with title + toggle */
+.project-header {
+  display: flex;
+  align-items: center;
   justify-content: space-between;
+  padding: 1rem;
+  background: #f5f5f5;
 }
 
-.logo { margin: 0; }
+.project-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
 
+.project-toggle {
+  font-size: 1.2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Hidden by default */
+.project-content {
+  display: none;
+  padding: 1rem;
+  background: white;
+}
+
+/* When open, show it */
+.project.open .project-content {
+  display: block;
+}
+
+/* Abstract text */
+.project-abstract {
+  margin: 0 0 1rem;
+  color: #333;
+  line-height: 1.4;
+}
+
+/* Image gallery inside each project */
+.project-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.project-images img {
+  flex: 1 1 calc(50% - 1rem);
+  max-width: calc(50% - 1rem);
+  height: auto;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+/* Site nav “active” state */
+#siteNav a.active {
+  color: var(--brand);
+  font-weight: 600;
+}
+
+
+
+
+
+  
