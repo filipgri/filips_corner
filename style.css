@@ -110,6 +110,7 @@ h2{ border-bottom: 4px solid var(--brand); display: inline-block; }
 /* ====== Project Images*/
 
 /* make project images same size and side-by-side */
+
 .project-images{
   display: grid;
   grid-template-columns: repeat(2, 1fr); /* two columns, side by side */
