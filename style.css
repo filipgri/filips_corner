@@ -118,7 +118,7 @@ h2{ border-bottom: 4px solid var(--brand); display: inline-block; }
 }
 
 .project-images img{
-  width: 100%;
+  width: 60%;
   aspect-ratio: 4 / 3;   /* or 1 / 1 for square, 16 / 9 for widescreen */
   height: auto;          /* browser computes height from aspect-ratio */
   object-fit: cover;     /* crops to fill uniformly */
