@@ -23,7 +23,7 @@ img{ max-width: 100%; display: block; }
 
 section{ padding: 3.5rem 1rem; }
 h1,h2,h3{ margin: 0 0 .5em; }
-h2{ border-bottom: 5px solid var(--brand); display: inline-block; }
+h2{ border-bottom: 4px solid var(--brand); display: inline-block; }
 
 /* =======================================================================
    Header & navigation (stable + centered to --maxw)
