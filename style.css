@@ -109,23 +109,66 @@ h2{ border-bottom: 4px solid var(--brand); display: inline-block; }
 
 /* ====== Project Images*/
 
-/* make project images same size and side-by-side */
 
+/*new patch 
+
+/* Center the Projects section like the home page (keep if you already have it) */
+#projects{
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Project card look (matches home tiles’ vibe, no hover) */
+.project{
+  background: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.08);
+  margin: 1.25rem 0 2.25rem;   /* space between projects */
+  overflow: hidden;
+}
+
+/* Header row with the title + toggle */
+.project-header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .9rem 1.1rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+.project-toggle{
+  border: 1px solid #ddd;
+  background: #fff;
+  border-radius: 6px;
+  padding: .25rem .45rem;
+  cursor: pointer;
+}
+
+/* Collapsed by default; expands when the card has .open */
+.project-content{ display: none; padding: 1rem 1.1rem 1.25rem; }
+.project.open .project-content{ display: block; }
+
+/* Two images side by side, bigger and sharp */
 .project-images{
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* two columns, side by side */
-  gap: 8px;
-  max-width: 640px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;                 /* more breathing room */
+  margin: .5rem 0 1.1rem;    /* spacing above/below gallery */
 }
-
 .project-images img{
   width: 100%;
-  aspect-ratio: 4 / 3;   /* or 1 / 1 for square, 16 / 9 for widescreen */
-  height: auto;          /* browser computes height from aspect-ratio */
-  object-fit: cover;     /* crops to fill uniformly */
-  border-radius: 6px;
+  height: 320px;             /* pick 240–320px to taste */
+  object-fit: cover;         /* fills without distortion; keeps sharp edges */
+  border-radius: 8px;
+  border: 1px solid #e8e8e8;
+  box-shadow: 0 2px 6px rgba(0,0,0,.06);
 }
 
+/* Keep readable on phones */
+@media (max-width: 640px){
+  .project-images{ grid-template-columns: 1fr; }
+}
 
 /* =======================================================================
    Device cards (devices.html)
