@@ -109,7 +109,6 @@ h2{ border-bottom: 4px solid var(--brand); display: inline-block; }
 
 /* ====== Project Images*/
 
-
 /*new patch 
 
 /* Center the Projects section like the home page (keep if you already have it) */
@@ -222,6 +221,32 @@ h2{ border-bottom: 4px solid var(--brand); display: inline-block; }
   text-align: center; font-size: 1rem; color: var(--text);
   width: 100%;
 }
+
+/* READ ALONG 
+
+/* Speaker icon */
+.speak-btn{
+  position: relative; display:inline-flex; align-items:center; justify-content:center;
+  width:44px; height:44px; margin-left:.5rem;
+  border:1px solid #ddd; background:#fff; border-radius:10px; cursor:pointer;
+  box-shadow:0 2px 6px rgba(0,0,0,.06);
+}
+.speak-btn .icon{ font-size:22px; line-height:1; }
+
+/* Cloud-y tooltip bubble */
+.speak-btn .bubble{
+  position:absolute; top:-64px; right:-6px; padding:.5rem .75rem; white-space:nowrap;
+  background:#fff; border:1px solid #e6e6e6; border-radius:40% 60% 60% 40%/40% 40% 60% 60%;
+  box-shadow:0 6px 16px rgba(0,0,0,.12); font-size:.9rem;
+  opacity:0; transform:translateY(6px); pointer-events:none; transition:opacity .15s, transform .15s;
+}
+.speak-btn:hover .bubble, .speak-btn:focus-visible .bubble{ opacity:1; transform:translateY(0); }
+
+/* Read-along highlight */
+.readable .hl{
+  background:#fff3b0; box-shadow:0 0 0 2px #fff3b0; border-radius:4px;
+}
+
 
 /* =======================================================================
    Footer
