@@ -4,11 +4,14 @@ document.getElementById('navToggle').addEventListener('click', () => {
 });
 
 // PROJECT-LEVEL toggles
-document.querySelectorAll('.project-toggle').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const project = btn.closest('.project');
-    const isOpen = project.classList.toggle('open');
-    btn.setAttribute('aria-expanded', isOpen);
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.project-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const card = btn.closest('.project');
+      const isOpen = card.classList.toggle('open');
+      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      btn.setAttribute('aria-label', isOpen ? 'Hide details' : 'Show details');
+    });
   });
 });
 
