@@ -125,7 +125,7 @@ h2{ border-bottom: 4px solid var(--brand); display: inline-block; }
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0,0,0,.08);
   margin: 1.25rem 0 2.25rem;   /* space between projects */
-  overflow: hidden;
+  overflow: visible;
 }
 
 /* Header row with the title + toggle */
@@ -235,6 +235,7 @@ h2{ border-bottom: 4px solid var(--brand); display: inline-block; }
 
 /* Cloud-y tooltip bubble */
 .speak-btn .bubble{
+  z-index: 1000;
   position:absolute; top:-64px; right:-6px; padding:.5rem .75rem; white-space:nowrap;
   background:#fff; border:1px solid #e6e6e6; border-radius:40% 60% 60% 40%/40% 40% 60% 60%;
   box-shadow:0 6px 16px rgba(0,0,0,.12); font-size:.9rem;
