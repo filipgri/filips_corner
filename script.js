@@ -4,26 +4,32 @@ document.getElementById('navToggle').addEventListener('click', () => {
 });
 
 // PROJECT-LEVEL toggles
+
+// Project expand/collapse (accordion)
+
 document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.project-toggle').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const card = btn.closest('.project');
-      const isOpen = card.classList.toggle('open');
-      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-      btn.setAttribute('aria-label', isOpen ? 'Hide details' : 'Show details');
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.project-toggle');
+    if (!btn) return;
+    const card = btn.closest('.project');
+
+    // OPTIONAL: accordion behavior — close other open cards
+    document.querySelectorAll('.project.open').forEach(p => {
+      if (p !== card) {
+        p.classList.remove('open');
+        const b = p.querySelector('.project-toggle');
+        if (b) b.setAttribute('aria-expanded', 'false');
+      }
     });
+
+    // Toggle the clicked card
+    const nowOpen = !card.classList.contains('open');
+    card.classList.toggle('open', nowOpen);
+    btn.setAttribute('aria-expanded', nowOpen ? 'true' : 'false');
+    btn.setAttribute('aria-label', nowOpen ? 'Hide details' : 'Show details');
   });
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.project-toggle').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const card = btn.closest('.project');
-      const open = card.classList.toggle('open');
-      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-  });
-});
 
 // ===== Read-along without real timings (weighted by punctuation) =====
 (() => {
