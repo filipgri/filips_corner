@@ -246,7 +246,35 @@ h2{ border-bottom: 4px solid var(--brand); display: inline-block; }
 /* Read-along highlight */
 .readable .hl{
   background:#fff3b0; box-shadow:0 0 0 2px #fff3b0; border-radius:4px;
+
+
 }
+
+/* Inline emphasis */
+.u {
+  text-decoration-line: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.12em;
+}
+
+/* Optional text highlight */
+mark {
+  background: #fff3a6;
+  padding: 0 .1em;
+  border-radius: .2em;
+}
+
+/* Lists inside project content */
+.project-content .bullets {
+  margin: .75rem 0 1rem;
+  padding-left: 1.2rem;   /* controls indent */
+}
+.project-content .bullets li { margin: .25rem 0; }
+
+/* Links: keep clearly underlined for accessibility */
+.project-content a { text-decoration: underline; }
+.project-content a:hover { text-underline-offset: .18em; }
+
 
 
 /* =======================================================================
