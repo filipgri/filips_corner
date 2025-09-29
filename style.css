@@ -132,17 +132,27 @@ h2{ border-bottom: 4px solid var(--brand); display: inline-block; }
 .project-header{
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: .5rem;
   padding: .9rem 1.1rem;
   border-bottom: 1px solid #f0f0f0;
 }
+
+/* Title pushes the rest to the right */
+.project-header > h3 { margin-right: auto; }
+
+
 .project-toggle{
   border: 1px solid #ddd;
   background: #fff;
   border-radius: 6px;
-  padding: .25rem .45rem;
+  width: 32px; height: 32px;      /* fixed */
+  display:grid; place-items: center;
   cursor: pointer;
 }
+
+/* Optional: small “playing” affordance */
+.speak-btn.playing { border-color: var(--brand); }
 
 /* Collapsed by default; expands when the card has .open */
 .project-content{ display: none; padding: 1rem 1.1rem 1.25rem; }

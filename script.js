@@ -31,13 +31,16 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// ===== Read-along without real timings (weighted by punctuation) =====
+// ===== Read-along with play/pause (punctuation-weighted timings) =====
 (() => {
   let player = new Audio();
-  let job = null;
+  let rafId = 0;
+  let activeBtn = null;
+  let activeText = null;
+  let activeCues = null;
 
   function wrapWords(container){
-    if (container.dataset.wrapped === "1") return;
+    if (container?.dataset.wrapped === "1") return;
     const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT, {
       acceptNode: n => n.nodeValue.trim() ? NodeFilter.FILTER_ACCEPT : NodeFilter.REJECT
     });
@@ -47,7 +50,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let idx = 0;
     nodes.forEach(node => {
       const frag = document.createDocumentFragment();
-      // split words and keep spaces/punct tokens separate
       const parts = node.nodeValue.match(/[\w’'-]+|[^\s\w]|[\s]+/g) || [node.nodeValue];
       parts.forEach(tok => {
         if (/^\s+$/.test(tok)) { frag.appendChild(document.createTextNode(tok)); }
@@ -56,9 +58,8 @@ document.addEventListener('DOMContentLoaded', () => {
           span.textContent = tok;
           span.className = 'w';
           span.dataset.widx = idx++;
-          // mark punctuation for weighting
           if (/^[,;:–—-]$/.test(tok)) span.dataset.punct = 'comma';
-          if (/^[.?!]$/.test(tok)) span.dataset.punct = 'stop';
+          if (/^[.?!]$/.test(tok))  span.dataset.punct = 'stop';
           frag.appendChild(span);
         }
       });
@@ -67,68 +68,105 @@ document.addEventListener('DOMContentLoaded', () => {
     container.dataset.wrapped = "1";
   }
 
-  // Build synthetic timings: words=1x, commas=0.5x, stops=1.5x
   function buildTimings(container, duration){
     const words = Array.from(container.querySelectorAll('.w'));
-    if (words.length === 0) return [];
-    let totalWeight = 0;
+    if (!words.length) return [];
+    let total = 0;
     const weights = words.map(w => {
       if (w.dataset.punct === 'comma') return 0.5;
       if (w.dataset.punct === 'stop')  return 1.5;
-      return 1; // regular word
-    }).map(w => (totalWeight += w, w));
-
-    // normalize
-    const norm = words.map((_, i) => weights[i] / totalWeight);
+      return 1;
+    });
+    total = weights.reduce((a,b)=>a+b,0);
     let t = 0;
     return words.map((_, i) => {
-      const dur = norm[i] * duration;
+      const dur = (weights[i] / total) * (duration || 30);
       const start = t; const end = t + dur; t = end;
       return { start, end, w: i };
     });
   }
 
+  function clearHL(container){
+    if (!container) return;
+    container.querySelectorAll('.w.hl').forEach(w => w.classList.remove('hl'));
+  }
+
   function runHighlight(container, cues){
     const words = container.querySelectorAll('.w');
-    const clear = () => words.forEach(w => w.classList.remove('hl'));
-    function setHL(i){ clear(); const el = words[i]; if (el) el.classList.add('hl'); }
-    cancelAnimationFrame(job?.raf); job = null;
+    cancelAnimationFrame(rafId);
     const tick = () => {
       const t = player.currentTime;
-      // find cue where start <= t < end (linear is fine here)
       const c = cues.find(c => t >= c.start && t < c.end);
-      if (c) setHL(c.w);
-      if (!player.paused && !player.ended) job = { raf: requestAnimationFrame(tick) };
+      if (c){
+        words.forEach(w => w.classList.remove('hl'));
+        const el = words[c.w];
+        if (el) el.classList.add('hl');
+      }
+      if (!player.paused && !player.ended) rafId = requestAnimationFrame(tick);
     };
-    job = { raf: requestAnimationFrame(tick) };
-    player.addEventListener('ended', clear, { once:true });
+    rafId = requestAnimationFrame(tick);
+    player.addEventListener('ended', () => {
+      clearHL(container);
+      if (activeBtn){
+        activeBtn.classList.remove('playing');
+        activeBtn.setAttribute('aria-pressed','false');
+        const ic = activeBtn.querySelector('.icon'); if (ic) ic.textContent = '🔊';
+      }
+    }, { once: true });
   }
 
-  async function handleSpeak(btn){
-    // stop any current playback
-    player.pause();
+  async function startFor(btn){
     const card = btn.closest('.project');
     const text = card.querySelector('.readable');
-    const src = btn.dataset.audio;
+    const src  = btn.dataset.audio;
+
+    activeBtn = btn; activeText = text;
 
     wrapWords(text);
-
     player.src = src;
     await player.load?.();
-    // wait for duration
-    await new Promise(r => player.addEventListener('loadedmetadata', r, { once:true }));
+    await new Promise(res => player.addEventListener('loadedmetadata', res, { once:true }));
+    activeCues = buildTimings(text, player.duration);
 
-    const cues = buildTimings(text, player.duration || 30);
-    runHighlight(text, cues);
     player.currentTime = 0;
-    player.play().catch(()=>{ /* user gesture required */ });
+    runHighlight(text, activeCues);
+    await player.play().catch(()=>{});
+    btn.classList.add('playing');
+    btn.setAttribute('aria-pressed','true');
+    const ic = btn.querySelector('.icon'); if (ic) ic.textContent = '⏸';
   }
 
-  // Hook up speakers
+  function pause(){
+    player.pause();
+    if (activeBtn){
+      activeBtn.classList.remove('playing');
+      activeBtn.setAttribute('aria-pressed','false');
+      const ic = activeBtn.querySelector('.icon'); if (ic) ic.textContent = '🔊';
+    }
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.speak-btn').forEach(btn => {
-      btn.addEventListener('click', () => handleSpeak(btn));
+      btn.addEventListener('click', async () => {
+        // Same button: toggle
+        if (activeBtn === btn){
+          if (player.paused){
+            btn.classList.add('playing');
+            btn.setAttribute('aria-pressed','true');
+            const ic = btn.querySelector('.icon'); if (ic) ic.textContent = '⏸';
+            runHighlight(activeText, activeCues); // resume RAF
+            player.play();
+          } else {
+            pause();                                // pause
+          }
+          return;
+        }
+
+        // Different button: stop previous, clear, and start new
+        pause();
+        clearHL(activeText);
+        await startFor(btn);
+      });
     });
   });
 })();
-
