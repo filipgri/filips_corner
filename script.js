@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// ===== Read-along with play/pause (punctuation-weighted timings) =====
+// ===== Read-along with play/pause (punctuation-weighted timings)
 (() => {
   let player = new Audio();
   let rafId = 0;
