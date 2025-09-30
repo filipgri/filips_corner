@@ -116,8 +116,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   async function startFor(btn){
-    const card = btn.closest('.project');
-    const text = card.querySelector('.readable');
+   // Prefer explicit target; else look near the button (project or hero)
+    const explicit = btn.dataset.target ? document.querySelector(btn.dataset.target) : null;
+    const scoped = btn.closest('.project')?.querySelector('.readable')
+               || btn.closest('.hero')?.querySelector('.readable');
+    const text = explicit || scoped;
+    if (!text) { console.warn('No .readable found for speaker'); return; }
     const src  = btn.dataset.audio;
 
     activeBtn = btn; activeText = text;
