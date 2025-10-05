@@ -2,7 +2,7 @@
    Base variables
    ======================================================================= */
 :root{
-  --brand: #0a56ff;   /* blue for octagon & accents */
+  --brand: #F2CD0C;   /* blue for octagon & accents blue (0a56ff)*/  
   --text:  #202124;
   --bg:    #fafafa;
   --maxw:  880px;     /* site content width */
