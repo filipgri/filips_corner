@@ -1,10 +1,18 @@
+/* ============= FONT ---  
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">  
+*/
+
+
 /* =======================================================================
    Base variables
    ======================================================================= */
 :root{
-  --brand: #F2CD0C;   /* blue for octagon & accents blue (0a56ff)*/  
-  --text:  #202124;
-  --bg:    #fafafa;
+  --brand: #F2CD0C;   /* blue for octagon & accents blue (0a56ff)
+   previous version F2CD0C*/  
+  --text:  #202124; /* previous ver 202124 */
+  --bg:    #fafafa;  /*  fafafa */
   --maxw:  880px;     /* site content width */
 }
 
@@ -36,8 +44,8 @@ section:not(:first-of-type){ padding-top: 1.5rem; }  /* was 3.5rem */
   position: sticky; top: 0; z-index: 10;
   display: flex; align-items: center;
   width: 100%;
-  background: #fff;
-  border-bottom: 1px solid #ddd;
+  background: #fff;  /* prev ver fff */ 
+  border-bottom: 1px solid #ddd;   /* prev ver ddd */
   /* center the inner content to match main column */
   padding-left: max(1rem, calc((100vw - var(--maxw)) / 2));
   padding-right: max(1rem, calc((100vw - var(--maxw)) / 2));
