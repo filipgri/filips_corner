@@ -4,6 +4,9 @@
   <meta charset="utf-8" />
   <title>filip.bircanin@kcl.ac.uk</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chivo:wght@400;600&family=DM+Sans:wght@400;600&family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;600;700&family=Source+Code+Pro:wght@400;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -23,6 +26,69 @@
       <a href="publications.html">Publications</a>
     </nav>
   </header>
+
+  <section class="theme-lab" aria-labelledby="themeLabTitle">
+    <div class="theme-lab__inner">
+      <div class="theme-lab__intro">
+        <h2 id="themeLabTitle">Theme lab</h2>
+        <p>Pick a preset or tweak the tokens to restyle the site instantly. Copy the generated CSS variables to reuse the palette elsewhere.</p>
+      </div>
+
+      <div class="theme-lab__controls">
+        <div class="theme-control">
+          <label for="themePicker">Preset</label>
+          <select id="themePicker" aria-describedby="themeHelp">
+            <option value="daylight">Daylight (default)</option>
+            <option value="tealCharcoal">Teal &amp; Charcoal</option>
+            <option value="citrusGlow">Citrus Glow</option>
+            <option value="midnightPlum">Midnight Plum</option>
+            <option value="custom">Custom</option>
+          </select>
+        </div>
+
+        <div class="theme-control">
+          <label for="brandColor">Accent</label>
+          <input type="color" id="brandColor" name="brandColor" data-token="--brand" value="#F2CD0C" />
+        </div>
+
+        <div class="theme-control">
+          <label for="bgColor">Background</label>
+          <input type="color" id="bgColor" name="bgColor" data-token="--bg" value="#FAFAFA" />
+        </div>
+
+        <div class="theme-control">
+          <label for="surfaceColor">Surface</label>
+          <input type="color" id="surfaceColor" name="surfaceColor" data-token="--surface" value="#FFFFFF" />
+        </div>
+
+        <div class="theme-control">
+          <label for="textColor">Text</label>
+          <input type="color" id="textColor" name="textColor" data-token="--text" value="#202124" />
+        </div>
+
+        <div class="theme-control">
+          <label for="fontPicker">Font pairing</label>
+          <select id="fontPicker">
+            <option value="modern">Inter / Space Grotesk</option>
+            <option value="tech">Chivo / Space Grotesk</option>
+            <option value="humanist">DM Sans / DM Serif Display</option>
+            <option value="editorial">Source Serif 4 / DM Sans</option>
+          </select>
+        </div>
+
+        <div class="theme-control theme-control--wide">
+          <button type="button" id="themeReset">Reset to default</button>
+        </div>
+
+        <p id="themeHelp" class="theme-help">Any manual tweaks will switch the preset to “Custom”.</p>
+      </div>
+
+      <div class="theme-lab__code">
+        <p class="code-label">Live CSS variables</p>
+        <pre id="themeCssPreview" aria-live="polite">:root {}</pre>
+      </div>
+    </div>
+  </section>
 
   <!-- ========== HERO with flashing image ========== -->
 
