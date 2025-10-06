@@ -1,7 +1,400 @@
 // Tiny helper to show/hide nav on small screens
-document.getElementById('navToggle').addEventListener('click', () => {
-  document.getElementById('siteNav').classList.toggle('open');
-});
+const navToggle = document.getElementById('navToggle');
+const siteNav = document.getElementById('siteNav');
+if (navToggle && siteNav){
+  navToggle.addEventListener('click', () => {
+    siteNav.classList.toggle('open');
+  });
+}
+
+// =====================================================================
+// Theme laboratory — live theming + CSS variable preview
+// =====================================================================
+(() => {
+  const root = document.documentElement;
+  const themePicker = document.getElementById('themePicker');
+  const fontPicker = document.getElementById('fontPicker');
+  const colorInputs = Array.from(document.querySelectorAll('[data-token]'));
+  const resetBtn = document.getElementById('themeReset');
+  const preview = document.getElementById('themeCssPreview');
+  const copyBtn = document.getElementById('copyThemeCss');
+  const copyStatus = document.getElementById('copyThemeCssStatus');
+
+  const storageKey = 'filip-theme-lab';
+  const defaultThemeKey = 'daylight';
+  const defaultFontKey = 'modern';
+  const trackedTokens = ['--brand','--brand-soft','--text','--bg','--surface','--surface-alt','--border','--muted','--shadow','--shadow-soft','--shadow-hover','--font-body','--font-heading'];
+  let lastPreviewCss = ':root {}';
+  let copyTimeout = 0;
+
+  const fonts = {
+    modern: {
+      body: '"Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif',
+      heading: '"Space Grotesk", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif'
+    },
+    tech: {
+      body: '"Chivo", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif',
+      heading: '"Space Grotesk", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif'
+    },
+    humanist: {
+      body: '"DM Sans", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif',
+      heading: '"DM Serif Display", "DM Sans", "Inter", serif'
+    },
+    editorial: {
+      body: '"Source Serif 4", "Georgia", "Times New Roman", serif',
+      heading: '"DM Sans", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif'
+    }
+  };
+
+  const themes = {
+    daylight: {
+      values: {
+        '--brand': '#F2CD0C',
+        '--text': '#202124',
+        '--bg': '#fafafa',
+        '--surface': '#ffffff',
+        '--surface-alt': '#f3f4f6',
+        '--border': '#e0e0e0',
+        '--muted': '#5f6368',
+        '--shadow': '0 4px 12px rgba(0,0,0,.08)',
+        '--shadow-soft': '0 2px 6px rgba(0,0,0,.06)',
+        '--shadow-hover': '0 8px 20px rgba(0,0,0,.12)'
+      },
+      fontKey: 'modern'
+    },
+    tealCharcoal: {
+      values: {
+        '--brand': '#2ad4c9',
+        '--text': '#f4fbfb',
+        '--bg': '#0f1b1c',
+        '--surface': '#162425',
+        '--surface-alt': '#1d3032',
+        '--border': '#1f3a3c',
+        '--muted': '#b7dcd9',
+        '--shadow': '0 16px 36px rgba(0, 0, 0, 0.55)',
+        '--shadow-soft': '0 6px 20px rgba(0, 0, 0, 0.4)',
+        '--shadow-hover': '0 18px 40px rgba(0, 0, 0, 0.6)'
+      },
+      fontKey: 'tech'
+    },
+    citrusGlow: {
+      values: {
+        '--brand': '#ff8a3d',
+        '--text': '#432c11',
+        '--bg': '#fff8f0',
+        '--surface': '#fff3e5',
+        '--surface-alt': '#ffe7d0',
+        '--border': '#f6c39a',
+        '--muted': '#7d6348',
+        '--shadow': '0 12px 28px rgba(255, 138, 61, 0.25)',
+        '--shadow-soft': '0 6px 16px rgba(255, 138, 61, 0.18)',
+        '--shadow-hover': '0 20px 36px rgba(255, 138, 61, 0.3)'
+      },
+      fontKey: 'humanist'
+    },
+    midnightPlum: {
+      values: {
+        '--brand': '#c084fc',
+        '--text': '#f4ecff',
+        '--bg': '#0d0415',
+        '--surface': '#1b0b2c',
+        '--surface-alt': '#241038',
+        '--border': '#311752',
+        '--muted': '#cdb4e7',
+        '--shadow': '0 18px 40px rgba(13, 4, 21, 0.65)',
+        '--shadow-soft': '0 8px 24px rgba(13, 4, 21, 0.5)',
+        '--shadow-hover': '0 24px 48px rgba(13, 4, 21, 0.7)'
+      },
+      fontKey: 'editorial'
+    }
+  };
+
+  let currentThemeKey = defaultThemeKey;
+  let currentFontKey = defaultFontKey;
+  let suppressSave = false;
+
+  const hexToRgba = (hex, alpha = 0.28) => {
+    if (!hex) return `rgba(0,0,0,${alpha})`;
+    const trimmed = hex.trim();
+    if (trimmed.startsWith('rgb')) return trimmed;
+    const clean = trimmed.replace('#','');
+    const parts = clean.length === 3 ? clean.split('').map(ch => ch + ch) : clean.match(/.{2}/g);
+    if (!parts) return `rgba(0,0,0,${alpha})`;
+    const [r,g,b] = parts.map(v => parseInt(v, 16));
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  };
+
+  const normalizeColorForInput = (value = '') => {
+    const trimmed = value.trim();
+    if (!trimmed) return '#000000';
+    if (trimmed.startsWith('#')){
+      if (trimmed.length === 4){
+        return '#' + trimmed.slice(1).split('').map(ch => ch + ch).join('');
+      }
+      return trimmed;
+    }
+    const nums = trimmed.match(/\d+(?:\.\d+)?/g);
+    if (!nums || nums.length < 3) return '#000000';
+    const [r,g,b] = nums.map(Number);
+    const toHex = (n) => Math.max(0, Math.min(255, Math.round(n))).toString(16).padStart(2, '0');
+    return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+  };
+
+  const setToken = (token, value) => {
+    if (!token) return;
+    root.style.setProperty(token, value);
+    if (token === '--brand'){
+      root.style.setProperty('--brand-soft', hexToRgba(value, 0.28));
+    }
+  };
+
+  const updateInputsFromStyles = () => {
+    if (!colorInputs.length) return;
+    const computed = getComputedStyle(root);
+    colorInputs.forEach(input => {
+      const token = input.dataset.token;
+      const raw = root.style.getPropertyValue(token) || computed.getPropertyValue(token);
+      if (raw) input.value = normalizeColorForInput(raw);
+    });
+  };
+
+  const updatePreview = () => {
+    if (!preview) return;
+    const computed = getComputedStyle(root);
+    const lines = trackedTokens.map(token => {
+      const value = (root.style.getPropertyValue(token) || computed.getPropertyValue(token) || '').trim();
+      return value ? `  ${token}: ${value};` : '';
+    }).filter(Boolean);
+    lastPreviewCss = `:root {\n${lines.join('\n')}\n}`;
+    preview.textContent = lastPreviewCss;
+  };
+
+  const setCopyStatus = (message, state) => {
+    if (!copyStatus) return;
+    if (copyTimeout){
+      clearTimeout(copyTimeout);
+      copyTimeout = 0;
+    }
+    copyStatus.textContent = message || '';
+    if (state){
+      copyStatus.dataset.state = state;
+    } else {
+      copyStatus.removeAttribute('data-state');
+    }
+    if (message){
+      copyTimeout = window.setTimeout(() => {
+        copyStatus.textContent = '';
+        copyStatus.removeAttribute('data-state');
+        copyTimeout = 0;
+      }, 3500);
+    }
+  };
+
+  const copyCss = async () => {
+    if (!lastPreviewCss || !lastPreviewCss.trim()){
+      setCopyStatus('Nothing to copy yet.', 'error');
+      return;
+    }
+
+    if (copyBtn) copyBtn.disabled = true;
+
+    try {
+      if (typeof navigator !== 'undefined' && navigator.clipboard && typeof navigator.clipboard.writeText === 'function'){
+        await navigator.clipboard.writeText(lastPreviewCss);
+      } else {
+        const textarea = document.createElement('textarea');
+        textarea.value = lastPreviewCss;
+        textarea.setAttribute('aria-hidden', 'true');
+        textarea.style.position = 'fixed';
+        textarea.style.top = '-9999px';
+        document.body.appendChild(textarea);
+        try {
+          textarea.focus({ preventScroll: true });
+        } catch (err) {
+          textarea.focus();
+        }
+        textarea.select();
+        const successful = document.execCommand('copy');
+        document.body.removeChild(textarea);
+        if (!successful) throw new Error('execCommand returned false');
+      }
+      setCopyStatus('Copied to clipboard!', 'success');
+    } catch (err) {
+      console.error('Theme lab copy failed', err);
+      setCopyStatus('Copy not available in this browser.', 'error');
+    } finally {
+      if (copyBtn) copyBtn.disabled = false;
+    }
+  };
+
+  const saveState = () => {
+    if (suppressSave || !('localStorage' in window)) return;
+    const payload = {
+      themeKey: currentThemeKey,
+      fontKey: currentFontKey,
+      tokens: {}
+    };
+    trackedTokens.forEach(token => {
+      const val = root.style.getPropertyValue(token).trim();
+      if (val) payload.tokens[token] = val;
+    });
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(payload));
+    } catch (err) {
+      /* ignore quota errors */
+    }
+  };
+
+  const applyFonts = (key, options = {}) => {
+    const pair = fonts[key] || fonts[defaultFontKey];
+    setToken('--font-body', pair.body);
+    setToken('--font-heading', pair.heading || pair.body);
+    currentFontKey = key;
+
+    if (!options.fromTheme && currentThemeKey !== 'custom' && themes[currentThemeKey]?.fontKey !== key){
+      currentThemeKey = 'custom';
+      if (themePicker) themePicker.value = 'custom';
+    }
+
+    if (fontPicker && !options.skipPickerUpdate){
+      fontPicker.value = key;
+    }
+
+    if (!options.skipPreview) updatePreview();
+    if (!options.silent) saveState();
+  };
+
+  const applyTheme = (key, options = {}) => {
+    const theme = themes[key] || themes[defaultThemeKey];
+    Object.entries(theme.values).forEach(([token, value]) => setToken(token, value));
+    currentThemeKey = key;
+
+    if (!options.skipFonts && theme.fontKey){
+      applyFonts(theme.fontKey, { skipPickerUpdate: false, skipPreview: true, silent: true, fromTheme: true });
+    }
+
+    if (themePicker && !options.skipPickerUpdate){
+      themePicker.value = key;
+    }
+
+    updateInputsFromStyles();
+    if (!options.skipPreview) updatePreview();
+    if (!options.silent) saveState();
+  };
+
+  const loadState = () => {
+    if (!('localStorage' in window)){
+      applyTheme(defaultThemeKey, { silent: true });
+      applyFonts(defaultFontKey, { silent: true, skipPreview: true, fromTheme: true });
+      updateInputsFromStyles();
+      updatePreview();
+      return;
+    }
+
+    let stored;
+    try {
+      stored = localStorage.getItem(storageKey);
+    } catch (err) {
+      stored = null;
+    }
+
+    if (!stored){
+      suppressSave = true;
+      applyTheme(defaultThemeKey, { silent: true });
+      applyFonts(defaultFontKey, { silent: true, skipPreview: true, fromTheme: true });
+      suppressSave = false;
+      updateInputsFromStyles();
+      updatePreview();
+      saveState();
+      return;
+    }
+
+    let parsed;
+    try {
+      parsed = JSON.parse(stored);
+    } catch (err) {
+      parsed = null;
+    }
+
+    suppressSave = true;
+
+    if (parsed?.themeKey && themes[parsed.themeKey]){
+      applyTheme(parsed.themeKey, { silent: true });
+    } else {
+      applyTheme(defaultThemeKey, { silent: true });
+    }
+
+    if (parsed?.fontKey && fonts[parsed.fontKey]){
+      applyFonts(parsed.fontKey, { silent: true, skipPreview: true, fromTheme: true });
+    }
+
+    if (parsed?.tokens){
+      Object.entries(parsed.tokens).forEach(([token, value]) => setToken(token, value));
+    }
+
+    currentThemeKey = parsed?.themeKey || currentThemeKey;
+    currentFontKey = parsed?.fontKey || currentFontKey;
+
+    suppressSave = false;
+
+    if (themePicker) themePicker.value = currentThemeKey;
+    if (fontPicker) fontPicker.value = currentFontKey;
+
+    updateInputsFromStyles();
+    updatePreview();
+    saveState();
+  };
+
+  if (themePicker || colorInputs.length || fontPicker){
+    loadState();
+
+    if (themePicker){
+      themePicker.addEventListener('change', (event) => {
+        const key = event.target.value;
+        if (key === 'custom'){
+          currentThemeKey = 'custom';
+          saveState();
+          return;
+        }
+        applyTheme(key);
+      });
+    }
+
+    if (fontPicker){
+      fontPicker.addEventListener('change', (event) => {
+        applyFonts(event.target.value);
+      });
+    }
+
+    if (colorInputs.length){
+      colorInputs.forEach(input => {
+        input.addEventListener('input', (event) => {
+          const token = event.currentTarget.dataset.token;
+          const value = event.currentTarget.value;
+          setToken(token, value);
+          currentThemeKey = 'custom';
+          if (themePicker) themePicker.value = 'custom';
+          updatePreview();
+          saveState();
+        });
+      });
+    }
+
+    if (resetBtn){
+      resetBtn.addEventListener('click', () => {
+        applyTheme(defaultThemeKey);
+      });
+    }
+  } else {
+    // pages without controls still honour persisted tokens
+    loadState();
+  }
+
+  if (copyBtn){
+    copyBtn.addEventListener('click', copyCss);
+  }
+})();
+
 
 // PROJECT-LEVEL toggles
 
