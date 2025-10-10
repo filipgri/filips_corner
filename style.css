@@ -8,12 +8,13 @@
 /* =======================================================================
    Base variables
    ======================================================================= */
+
 :root{
-  --brand: #F2CD0C;   /* blue for octagon & accents blue (0a56ff) */
+  --brand: #2B12EA;   /*blue for octagon & accents blue (0a56ff) */
   --text:  #202124; 
   --bg:    #fafafa;  
-  --maxw:  880px;     /* site content width */
-}
+  --maxw:  880px;     /*site content width */
+} 
 
 
 
