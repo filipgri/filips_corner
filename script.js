@@ -15,6 +15,10 @@ if (navToggle && siteNav){
 // =====================================================================
 (() => {
   const root = document.documentElement;
+  const legacyPatch = document.querySelector('#themePatch, .theme-lab__preview');
+  if (legacyPatch){
+    legacyPatch.remove();
+  }
   const themePicker = document.getElementById('themePicker');
   const fontPicker = document.getElementById('fontPicker');
   const colorInputs = Array.from(document.querySelectorAll('[data-token]'));

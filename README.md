@@ -25,7 +25,7 @@ live-server
 The page will refresh automatically whenever you save edits in Sublime.
 
 ### Using the built-in Theme Lab
-- The Theme Lab now lives inside a collapsible “Personalise the theme” panel at the top of the home page so it stays out of the way for most visitors.
+- The Theme Lab now lives inside a collapsible “Personalise the theme” panel at the top of the home page so it stays out of the way for most visitors, and the previous `:root {…}` CSS preview is removed so nothing extra shows up on load.
 - Preset palettes are tuned for common colour-vision differences (tritan, deutan, and a dark high-contrast option). Manual tweaks via the colour pickers automatically switch the preset menu to **Custom** so you know you are on a bespoke combination.
 - The selections are stored in the browser’s `localStorage`, meaning each visitor keeps their own preferences without affecting anyone else.
 
