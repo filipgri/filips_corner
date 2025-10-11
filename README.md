@@ -28,6 +28,16 @@ The page will refresh automatically whenever you save edits in Sublime.
 - While you experiment in the Theme Lab at the top of the home page, the **Copy CSS** button copies the current `:root { ... }` variables to your clipboard.
 - Paste the snippet into your notes or another stylesheet to reuse the palette you dialled in.
 
+### Locking in a palette for `main`
+Once you are happy with a colour/font combination and want to make it the permanent theme:
+
+1. Click **Copy CSS** in the Theme Lab and paste the variables over the existing `:root { ... }` block at the top of `style.css`.
+2. Update any additional accents if you have added custom components (e.g., buttons on other pages) so they reference the variables you just pasted.
+3. Remove the entire `<section class="theme-lab">…</section>` block from `index.html` so visitors will not see the Theme Lab controls.
+4. Open `script.js` and delete the “Theme laboratory” IIFE (the block surrounded by the comments) because it is no longer needed once the palette is hard-coded.
+5. Optionally delete the Theme Lab-specific CSS rules in `style.css` to keep the stylesheet tidy.
+6. Commit the updated files to `main`—only the finished palette remains and the Theme Lab UI disappears for visitors.
+
 ### Editing tips for Sublime Text
 - Open the entire `filips_corner` folder in Sublime so you can switch between `index.html`, `style.css`, and `script.js` quickly.
 - Save often—your local server will pick up the changes immediately on refresh.

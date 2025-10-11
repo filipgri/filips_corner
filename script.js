@@ -2,8 +2,11 @@
 const navToggle = document.getElementById('navToggle');
 const siteNav = document.getElementById('siteNav');
 if (navToggle && siteNav){
+  const setExpanded = (open) => navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  setExpanded(siteNav.classList.contains('open'));
   navToggle.addEventListener('click', () => {
-    siteNav.classList.toggle('open');
+    const isOpen = siteNav.classList.toggle('open');
+    setExpanded(isOpen);
   });
 }
 
