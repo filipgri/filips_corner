@@ -27,71 +27,69 @@
     </nav>
   </header>
 
-  <section class="theme-lab" aria-labelledby="themeLabTitle">
-    <div class="theme-lab__inner">
-      <div class="theme-lab__intro">
-        <h2 id="themeLabTitle">Theme lab</h2>
-        <p>Pick a preset or tweak the tokens to restyle the site instantly. Copy the generated CSS variables to reuse the palette elsewhere.</p>
+  <section class="theme-lab" aria-labelledby="themeLabSummary themeLabPanelTitle">
+    <details class="theme-lab__panel">
+      <summary class="theme-lab__summary">
+        <span class="theme-lab__summary-title" id="themeLabSummary">Personalise the theme</span>
+        <span class="theme-lab__summary-hint">Optional: high-contrast palettes &amp; fonts</span>
+      </summary>
+
+      <div class="theme-lab__inner">
+        <div class="theme-lab__intro">
+          <h2 id="themeLabPanelTitle">Personalise the theme</h2>
+          <p>Select one of the tested colour combinations that remain legible for common colour-vision differences, or fine-tune the tokens below. Your choices stay on this device.</p>
+        </div>
+
+        <div class="theme-lab__controls">
+          <div class="theme-control">
+            <label for="themePicker">Palette presets</label>
+            <select id="themePicker" aria-describedby="themeHelp">
+              <option value="daylight">Daylight (default)</option>
+              <option value="oceanMist">Ocean Mist — tritan-friendly</option>
+              <option value="emberSlate">Ember Slate — deuteranopia safe</option>
+              <option value="moonlight">Moonlight — dark high contrast</option>
+              <option value="custom">Custom</option>
+            </select>
+          </div>
+
+          <div class="theme-control">
+            <label for="brandColor">Accent</label>
+            <input type="color" id="brandColor" name="brandColor" data-token="--brand" value="#F2CD0C" />
+          </div>
+
+          <div class="theme-control">
+            <label for="bgColor">Background</label>
+            <input type="color" id="bgColor" name="bgColor" data-token="--bg" value="#FAFAFA" />
+          </div>
+
+          <div class="theme-control">
+            <label for="surfaceColor">Surface</label>
+            <input type="color" id="surfaceColor" name="surfaceColor" data-token="--surface" value="#FFFFFF" />
+          </div>
+
+          <div class="theme-control">
+            <label for="textColor">Text</label>
+            <input type="color" id="textColor" name="textColor" data-token="--text" value="#202124" />
+          </div>
+
+          <div class="theme-control">
+            <label for="fontPicker">Font pairing</label>
+            <select id="fontPicker">
+              <option value="modern">Inter / Space Grotesk</option>
+              <option value="tech">Chivo / Space Grotesk</option>
+              <option value="humanist">DM Sans / DM Serif Display</option>
+              <option value="editorial">Source Serif 4 / DM Sans</option>
+            </select>
+          </div>
+
+          <div class="theme-control theme-control--wide">
+            <button type="button" id="themeReset">Reset to default</button>
+          </div>
+
+          <p id="themeHelp" class="theme-help">Manual tweaks flip the preset to “Custom” so you always know when a palette is bespoke.</p>
+        </div>
       </div>
-
-      <div class="theme-lab__controls">
-        <div class="theme-control">
-          <label for="themePicker">Preset</label>
-          <select id="themePicker" aria-describedby="themeHelp">
-            <option value="daylight">Daylight (default)</option>
-            <option value="tealCharcoal">Teal &amp; Charcoal</option>
-            <option value="citrusGlow">Citrus Glow</option>
-            <option value="midnightPlum">Midnight Plum</option>
-            <option value="custom">Custom</option>
-          </select>
-        </div>
-
-        <div class="theme-control">
-          <label for="brandColor">Accent</label>
-          <input type="color" id="brandColor" name="brandColor" data-token="--brand" value="#F2CD0C" />
-        </div>
-
-        <div class="theme-control">
-          <label for="bgColor">Background</label>
-          <input type="color" id="bgColor" name="bgColor" data-token="--bg" value="#FAFAFA" />
-        </div>
-
-        <div class="theme-control">
-          <label for="surfaceColor">Surface</label>
-          <input type="color" id="surfaceColor" name="surfaceColor" data-token="--surface" value="#FFFFFF" />
-        </div>
-
-        <div class="theme-control">
-          <label for="textColor">Text</label>
-          <input type="color" id="textColor" name="textColor" data-token="--text" value="#202124" />
-        </div>
-
-        <div class="theme-control">
-          <label for="fontPicker">Font pairing</label>
-          <select id="fontPicker">
-            <option value="modern">Inter / Space Grotesk</option>
-            <option value="tech">Chivo / Space Grotesk</option>
-            <option value="humanist">DM Sans / DM Serif Display</option>
-            <option value="editorial">Source Serif 4 / DM Sans</option>
-          </select>
-        </div>
-
-        <div class="theme-control theme-control--wide">
-          <button type="button" id="themeReset">Reset to default</button>
-        </div>
-
-        <p id="themeHelp" class="theme-help">Any manual tweaks will switch the preset to “Custom”.</p>
-      </div>
-
-      <div class="theme-lab__code">
-        <div class="code-header">
-          <p class="code-label">Live CSS variables</p>
-          <button type="button" id="copyThemeCss" class="code-copy">Copy CSS</button>
-        </div>
-        <pre id="themeCssPreview" aria-live="polite">:root {}</pre>
-        <p id="copyThemeCssStatus" class="code-status" role="status" aria-live="polite"></p>
-      </div>
-    </div>
+    </details>
   </section>
 
   <!-- ========== HERO with flashing image ========== -->

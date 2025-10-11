@@ -19,16 +19,11 @@ if (navToggle && siteNav){
   const fontPicker = document.getElementById('fontPicker');
   const colorInputs = Array.from(document.querySelectorAll('[data-token]'));
   const resetBtn = document.getElementById('themeReset');
-  const preview = document.getElementById('themeCssPreview');
-  const copyBtn = document.getElementById('copyThemeCss');
-  const copyStatus = document.getElementById('copyThemeCssStatus');
 
   const storageKey = 'filip-theme-lab';
   const defaultThemeKey = 'daylight';
   const defaultFontKey = 'modern';
   const trackedTokens = ['--brand','--brand-soft','--text','--bg','--surface','--surface-alt','--border','--muted','--shadow','--shadow-soft','--shadow-hover','--font-body','--font-heading'];
-  let lastPreviewCss = ':root {}';
-  let copyTimeout = 0;
 
   const fonts = {
     modern: {
@@ -65,50 +60,50 @@ if (navToggle && siteNav){
       },
       fontKey: 'modern'
     },
-    tealCharcoal: {
+    oceanMist: {
       values: {
-        '--brand': '#2ad4c9',
-        '--text': '#f4fbfb',
-        '--bg': '#0f1b1c',
-        '--surface': '#162425',
-        '--surface-alt': '#1d3032',
-        '--border': '#1f3a3c',
-        '--muted': '#b7dcd9',
-        '--shadow': '0 16px 36px rgba(0, 0, 0, 0.55)',
-        '--shadow-soft': '0 6px 20px rgba(0, 0, 0, 0.4)',
-        '--shadow-hover': '0 18px 40px rgba(0, 0, 0, 0.6)'
+        '--brand': '#0f7b9d',
+        '--text': '#102a33',
+        '--bg': '#f3f7f8',
+        '--surface': '#ffffff',
+        '--surface-alt': '#e6eef1',
+        '--border': '#c9d8de',
+        '--muted': '#3f5e68',
+        '--shadow': '0 6px 20px rgba(15, 123, 157, 0.16)',
+        '--shadow-soft': '0 4px 12px rgba(15, 123, 157, 0.12)',
+        '--shadow-hover': '0 10px 24px rgba(15, 123, 157, 0.22)'
       },
-      fontKey: 'tech'
+      fontKey: 'modern'
     },
-    citrusGlow: {
+    emberSlate: {
       values: {
-        '--brand': '#ff8a3d',
-        '--text': '#432c11',
-        '--bg': '#fff8f0',
-        '--surface': '#fff3e5',
-        '--surface-alt': '#ffe7d0',
-        '--border': '#f6c39a',
-        '--muted': '#7d6348',
-        '--shadow': '0 12px 28px rgba(255, 138, 61, 0.25)',
-        '--shadow-soft': '0 6px 16px rgba(255, 138, 61, 0.18)',
-        '--shadow-hover': '0 20px 36px rgba(255, 138, 61, 0.3)'
+        '--brand': '#c75000',
+        '--text': '#1e1f20',
+        '--bg': '#f5f5f5',
+        '--surface': '#ffffff',
+        '--surface-alt': '#ebe8e4',
+        '--border': '#d8d2cc',
+        '--muted': '#55504a',
+        '--shadow': '0 10px 26px rgba(30, 31, 32, 0.15)',
+        '--shadow-soft': '0 4px 14px rgba(30, 31, 32, 0.12)',
+        '--shadow-hover': '0 14px 30px rgba(30, 31, 32, 0.22)'
       },
       fontKey: 'humanist'
     },
-    midnightPlum: {
+    moonlight: {
       values: {
-        '--brand': '#c084fc',
-        '--text': '#f4ecff',
-        '--bg': '#0d0415',
-        '--surface': '#1b0b2c',
-        '--surface-alt': '#241038',
-        '--border': '#311752',
-        '--muted': '#cdb4e7',
-        '--shadow': '0 18px 40px rgba(13, 4, 21, 0.65)',
-        '--shadow-soft': '0 8px 24px rgba(13, 4, 21, 0.5)',
-        '--shadow-hover': '0 24px 48px rgba(13, 4, 21, 0.7)'
+        '--brand': '#ffd166',
+        '--text': '#f8fbff',
+        '--bg': '#041322',
+        '--surface': '#0b1f33',
+        '--surface-alt': '#12304a',
+        '--border': '#214d70',
+        '--muted': '#cad9e4',
+        '--shadow': '0 18px 42px rgba(4, 19, 34, 0.6)',
+        '--shadow-soft': '0 10px 26px rgba(4, 19, 34, 0.45)',
+        '--shadow-hover': '0 22px 48px rgba(4, 19, 34, 0.68)'
       },
-      fontKey: 'editorial'
+      fontKey: 'tech'
     }
   };
 
@@ -161,75 +156,6 @@ if (navToggle && siteNav){
     });
   };
 
-  const updatePreview = () => {
-    if (!preview) return;
-    const computed = getComputedStyle(root);
-    const lines = trackedTokens.map(token => {
-      const value = (root.style.getPropertyValue(token) || computed.getPropertyValue(token) || '').trim();
-      return value ? `  ${token}: ${value};` : '';
-    }).filter(Boolean);
-    lastPreviewCss = `:root {\n${lines.join('\n')}\n}`;
-    preview.textContent = lastPreviewCss;
-  };
-
-  const setCopyStatus = (message, state) => {
-    if (!copyStatus) return;
-    if (copyTimeout){
-      clearTimeout(copyTimeout);
-      copyTimeout = 0;
-    }
-    copyStatus.textContent = message || '';
-    if (state){
-      copyStatus.dataset.state = state;
-    } else {
-      copyStatus.removeAttribute('data-state');
-    }
-    if (message){
-      copyTimeout = window.setTimeout(() => {
-        copyStatus.textContent = '';
-        copyStatus.removeAttribute('data-state');
-        copyTimeout = 0;
-      }, 3500);
-    }
-  };
-
-  const copyCss = async () => {
-    if (!lastPreviewCss || !lastPreviewCss.trim()){
-      setCopyStatus('Nothing to copy yet.', 'error');
-      return;
-    }
-
-    if (copyBtn) copyBtn.disabled = true;
-
-    try {
-      if (typeof navigator !== 'undefined' && navigator.clipboard && typeof navigator.clipboard.writeText === 'function'){
-        await navigator.clipboard.writeText(lastPreviewCss);
-      } else {
-        const textarea = document.createElement('textarea');
-        textarea.value = lastPreviewCss;
-        textarea.setAttribute('aria-hidden', 'true');
-        textarea.style.position = 'fixed';
-        textarea.style.top = '-9999px';
-        document.body.appendChild(textarea);
-        try {
-          textarea.focus({ preventScroll: true });
-        } catch (err) {
-          textarea.focus();
-        }
-        textarea.select();
-        const successful = document.execCommand('copy');
-        document.body.removeChild(textarea);
-        if (!successful) throw new Error('execCommand returned false');
-      }
-      setCopyStatus('Copied to clipboard!', 'success');
-    } catch (err) {
-      console.error('Theme lab copy failed', err);
-      setCopyStatus('Copy not available in this browser.', 'error');
-    } finally {
-      if (copyBtn) copyBtn.disabled = false;
-    }
-  };
-
   const saveState = () => {
     if (suppressSave || !('localStorage' in window)) return;
     const payload = {
@@ -263,7 +189,6 @@ if (navToggle && siteNav){
       fontPicker.value = key;
     }
 
-    if (!options.skipPreview) updatePreview();
     if (!options.silent) saveState();
   };
 
@@ -273,7 +198,7 @@ if (navToggle && siteNav){
     currentThemeKey = key;
 
     if (!options.skipFonts && theme.fontKey){
-      applyFonts(theme.fontKey, { skipPickerUpdate: false, skipPreview: true, silent: true, fromTheme: true });
+      applyFonts(theme.fontKey, { skipPickerUpdate: false, silent: true, fromTheme: true });
     }
 
     if (themePicker && !options.skipPickerUpdate){
@@ -281,16 +206,14 @@ if (navToggle && siteNav){
     }
 
     updateInputsFromStyles();
-    if (!options.skipPreview) updatePreview();
     if (!options.silent) saveState();
   };
 
   const loadState = () => {
     if (!('localStorage' in window)){
       applyTheme(defaultThemeKey, { silent: true });
-      applyFonts(defaultFontKey, { silent: true, skipPreview: true, fromTheme: true });
+      applyFonts(defaultFontKey, { silent: true, fromTheme: true });
       updateInputsFromStyles();
-      updatePreview();
       return;
     }
 
@@ -304,10 +227,9 @@ if (navToggle && siteNav){
     if (!stored){
       suppressSave = true;
       applyTheme(defaultThemeKey, { silent: true });
-      applyFonts(defaultFontKey, { silent: true, skipPreview: true, fromTheme: true });
+      applyFonts(defaultFontKey, { silent: true, fromTheme: true });
       suppressSave = false;
       updateInputsFromStyles();
-      updatePreview();
       saveState();
       return;
     }
@@ -328,7 +250,7 @@ if (navToggle && siteNav){
     }
 
     if (parsed?.fontKey && fonts[parsed.fontKey]){
-      applyFonts(parsed.fontKey, { silent: true, skipPreview: true, fromTheme: true });
+      applyFonts(parsed.fontKey, { silent: true, fromTheme: true });
     }
 
     if (parsed?.tokens){
@@ -344,7 +266,6 @@ if (navToggle && siteNav){
     if (fontPicker) fontPicker.value = currentFontKey;
 
     updateInputsFromStyles();
-    updatePreview();
     saveState();
   };
 
@@ -377,7 +298,6 @@ if (navToggle && siteNav){
           setToken(token, value);
           currentThemeKey = 'custom';
           if (themePicker) themePicker.value = 'custom';
-          updatePreview();
           saveState();
         });
       });
@@ -391,10 +311,6 @@ if (navToggle && siteNav){
   } else {
     // pages without controls still honour persisted tokens
     loadState();
-  }
-
-  if (copyBtn){
-    copyBtn.addEventListener('click', copyCss);
   }
 })();
 

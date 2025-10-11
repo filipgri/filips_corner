@@ -24,19 +24,25 @@ live-server
 ```
 The page will refresh automatically whenever you save edits in Sublime.
 
-### Capturing a palette snapshot
-- While you experiment in the Theme Lab at the top of the home page, the **Copy CSS** button copies the current `:root { ... }` variables to your clipboard.
-- Paste the snippet into your notes or another stylesheet to reuse the palette you dialled in.
+### Using the built-in Theme Lab
+- The Theme Lab now lives inside a collapsible “Personalise the theme” panel at the top of the home page so it stays out of the way for most visitors.
+- Preset palettes are tuned for common colour-vision differences (tritan, deutan, and a dark high-contrast option). Manual tweaks via the colour pickers automatically switch the preset menu to **Custom** so you know you are on a bespoke combination.
+- The selections are stored in the browser’s `localStorage`, meaning each visitor keeps their own preferences without affecting anyone else.
 
 ### Locking in a palette for `main`
 Once you are happy with a colour/font combination and want to make it the permanent theme:
 
-1. Click **Copy CSS** in the Theme Lab and paste the variables over the existing `:root { ... }` block at the top of `style.css`.
-2. Update any additional accents if you have added custom components (e.g., buttons on other pages) so they reference the variables you just pasted.
-3. Remove the entire `<section class="theme-lab">…</section>` block from `index.html` so visitors will not see the Theme Lab controls.
-4. Open `script.js` and delete the “Theme laboratory” IIFE (the block surrounded by the comments) because it is no longer needed once the palette is hard-coded.
-5. Optionally delete the Theme Lab-specific CSS rules in `style.css` to keep the stylesheet tidy.
-6. Commit the updated files to `main`—only the finished palette remains and the Theme Lab UI disappears for visitors.
+1. Open your browser’s developer tools console while the Theme Lab shows the palette you want to keep.
+2. Run the snippet below to print the current design tokens so you can copy/paste them:
+   ```js
+   const tokens = ['--brand','--brand-soft','--text','--bg','--surface','--surface-alt','--border','--muted','--shadow','--shadow-soft','--shadow-hover'];
+   const styles = getComputedStyle(document.documentElement);
+   tokens.forEach(name => console.log(`${name}: ${styles.getPropertyValue(name).trim()};`));
+   console.log('--font-body:', styles.getPropertyValue('--font-body').trim());
+   console.log('--font-heading:', styles.getPropertyValue('--font-heading').trim());
+   ```
+3. Paste the output over the existing `:root { ... }` block at the top of `style.css`, and make sure any one-off colours in other components reference those variables for consistency.
+4. If you no longer want visitors to adjust the theme, remove the `<section class="theme-lab">…</section>` block from `index.html`, delete the “Theme laboratory” IIFE from `script.js`, and prune the related CSS rules.
 
 ### Editing tips for Sublime Text
 - Open the entire `filips_corner` folder in Sublime so you can switch between `index.html`, `style.css`, and `script.js` quickly.
