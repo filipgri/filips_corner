@@ -2,10 +2,10 @@
    Base variables
    ======================================================================= */
 :root{
-  --brand: #F2CD0C;
+  --brand: #0b27f4;
   --brand-soft: rgba(242, 205, 12, 0.28);
   --text:  #202124;
-  --bg:    #fafafa;
+  --bg:    #faf9f5;
   --surface: #ffffff;
   --surface-alt: #f3f4f6;
   --border: #e0e0e0;
@@ -15,8 +15,8 @@
   --shadow-hover: 0 8px 20px rgba(0,0,0,.12);
   --maxw:  880px;     /* site content width */
   --radius: 10px;
-  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --font-heading: "Space Grotesk", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body: "DM Sans", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-heading: "DM Serif Display", "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
 *,
@@ -519,6 +519,152 @@ mark {
 .project-content a { text-decoration: underline; }
 .project-content a:hover { text-underline-offset: .18em; }
 
+/* Compact the "Personalise the theme" bar */
+section.theme-lab{            /* shrink the whole bar */
+  padding: .6rem 0;           /* was 3.5rem 1rem via section{} */
+}
+
+.theme-lab__summary{          /* shrink the clickable summary row */
+  padding: .6rem 0;           /* was 1.4rem 0 */
+  font-size: .95rem;
+  padding-right: 1.5rem;      /* tighten arrow spacing */
+}
+
+.theme-lab__summary-title{    /* slightly smaller heading */
+  font-size: 1rem;            /* was 1.05rem */
+}
+
+.theme-lab__summary-hint{     /* optional: smaller hint line */
+  font-size: .8rem;           /* was .85rem */
+}
+
+.theme-lab__summary::after{   /* smaller chevron */
+  right: .25rem;
+  width: .5rem;
+  height: .5rem;
+}
+
+.theme-lab__panel[open] .theme-lab__summary{
+  margin-bottom: .75rem;      /* was 1.5rem */
+}
+
+/* ========== Sticky left icon menu ========== */
+.side-nav{
+  position: fixed;
+  left: clamp(8px, 2vw, 18px);
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 30;
+  /* keep it subtle against your background */
+  pointer-events: none; /* links re-enable pointer events below */
+}
+
+.side-nav ul{ list-style: none; margin: 0; padding: 0; display: grid; gap: .9rem; }
+
+.side-nav__link{
+  --size: 38px;                /* icon button size */
+  width: var(--size);
+  height: var(--size);
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: color-mix(in oklab, var(--surface) 80%, transparent);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-soft);
+  pointer-events: auto;        /* re-enable clicking */
+  position: relative;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+}
+
+.side-nav__link svg{
+  width: 22px; height: 22px;
+  stroke: var(--brand);
+  fill: none;
+}
+
+/* Side-nav image icons */
+.side-nav__link .side-nav__icon{
+  width: 28px;
+  height: 28px;
+  display: block;
+}
+
+/* If your SVG files use currentColor (see note below),
+   they’ll tint with the link color on hover/focus */
+.side-nav__link{ color: var(--muted); }
+.side-nav__link:hover,
+.side-nav__link:focus{ color: var(--brand); }
+
+
+.side-nav__link:hover, .side-nav__link:focus-visible{
+  transform: translateX(2px);
+  border-color: color-mix(in oklab, var(--brand) 40%, var(--border));
+  box-shadow: var(--shadow);
+  outline: none;
+}
+
+/* Tooltip from data-label */
+.side-nav__link::after{
+  content: attr(data-label);
+  position: absolute;
+  left: calc(100% + .5rem);
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: .28rem .5rem;
+  font-size: .78rem;
+  white-space: nowrap;
+  box-shadow: var(--shadow-soft);
+  opacity: 0;
+  translate: -4px 0;
+  pointer-events: none;
+  transition: opacity .18s ease, translate .18s ease;
+}
+.side-nav__link:hover::after,
+.side-nav__link:focus-visible::after{
+  opacity: 1;
+  translate: 0 0;
+}
+
+/* Current page highlight */
+.side-nav__link.is-current{
+  background: color-mix(in oklab, var(--brand) 12%, var(--surface));
+  border-color: color-mix(in oklab, var(--brand) 50%, var(--border));
+}
+.side-nav__link.is-current svg{
+  stroke: color-mix(in oklab, var(--brand) 90%, var(--text));
+}
+
+/* Respect small screens: hide or dock at top */
+@media (max-width: 900px){
+  .side-nav{ display: none; } /* simplest: hide on mobile */
+}
+
+/* Reduced-motion users */
+@media (prefers-reduced-motion: reduce){
+  .side-nav__link, .side-nav__link::after{ transition: none; }
+}
+
+/* Mask-based icons — use brand color automatically */
+.side-nav__link::before{
+  content:"";
+  width: 28px;
+  height: 28px;
+  background-color: var(--brand);             /* the tint */
+  -webkit-mask: no-repeat center / contain;   /* Safari */
+  mask: no-repeat center / contain;           /* Chrome/Firefox */
+}
+
+/* Point each icon class to your files */
+.icon-projects::before      { -webkit-mask-image: url("images/projects.svg");     mask-image: url("images/projects.svg"); }
+.icon-publications::before  { -webkit-mask-image: url("images/books.svg");        mask-image: url("images/books.svg"); }
+.icon-about::before         { -webkit-mask-image: url("images/about.svg");     mask-image: url("images/about.svg"); }
+.icon-download::before         { -webkit-mask-image: url("images/download.svg");     mask-image: url("images/download.svg"); }
+
+/* Keep your existing rules for hover/focus box, tooltip, current state, etc. */
 
 
 /* =======================================================================

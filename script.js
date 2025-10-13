@@ -51,9 +51,9 @@ if (navToggle && siteNav){
   const themes = {
     daylight: {
       values: {
-        '--brand': '#F2CD0C',
+        '--brand': '#0b27f4',
         '--text': '#202124',
-        '--bg': '#fafafa',
+        '--bg': '#faf9f5',
         '--surface': '#ffffff',
         '--surface-alt': '#f3f4f6',
         '--border': '#e0e0e0',
@@ -481,6 +481,16 @@ document.addEventListener('DOMContentLoaded', () => {
           }
           return;
         }
+
+        // Highlight current page in side-nav
+(() => {
+  const here = location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.side-nav a').forEach(a => {
+    const target = a.getAttribute('href');
+    if (target === here) a.classList.add('is-current');
+  });
+})();
+
 
         // Different button: stop previous, clear, and start new
         pause();
